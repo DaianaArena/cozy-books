@@ -1,6 +1,4 @@
-package main.java.com.app.venta;
-
-import main.java.com.app.libro.Libro;
+package main.java.com.app.model;
 
 public class DetalleVenta {
 

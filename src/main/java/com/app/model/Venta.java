@@ -1,8 +1,7 @@
-package main.java.com.app.venta;
+package main.java.com.app.model;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import main.java.com.app.cliente.Cliente;
 
 public class Venta {
 

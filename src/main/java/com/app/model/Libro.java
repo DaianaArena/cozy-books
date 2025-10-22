@@ -1,6 +1,5 @@
-package main.java.com.app.libro;
+package main.java.com.app.model;
 
-import main.java.com.app.autor.Autor;
 import java.sql.Timestamp;
 
 public class Libro {

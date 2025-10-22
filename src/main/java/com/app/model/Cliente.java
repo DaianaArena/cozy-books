@@ -1,4 +1,4 @@
-package main.java.com.app.cliente;
+package main.java.com.app.model;
 
 import java.sql.Timestamp;
 

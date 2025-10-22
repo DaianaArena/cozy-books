@@ -1,4 +1,4 @@
-package main.java.com.app.autor;
+package main.java.com.app.model;
 
 import java.util.Date;
 
