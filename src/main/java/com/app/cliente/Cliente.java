@@ -1,113 +1,80 @@
 package main.java.com.app.cliente;
 
-import java.util.ArrayList;
-
-//import main.java.com.app.libro.Libro;
-import main.java.com.app.libro.audiolibro.Audiolibro;
-import main.java.com.app.libro.digital.Digital;
-import main.java.com.app.libro.fisico.Fisico;
+import java.sql.Timestamp;
 
 public class Cliente {
-    /*
-     * agregar los atributos privados nombre, documento y un ArrayList lista_De_Libros_Comprados
-     * agregar los respectivos get, set y el constructor
-     * agregar un metodo mostrarCliente
-     */
+
+    private int idCliente;
     private String nombre;
-    private String documento;
+    private String documento; // DNI de 8 dígitos
+    private String email;
+    private String telefono;
+    private Timestamp fechaRegistro;
 
-    //private ArrayList < Libro > librosComprados;
-
-    private ArrayList < Audiolibro > listaDeAudiolibros;
-    private ArrayList < Digital > listaDeDigital;
-    private ArrayList < Fisico > listaDeFisico;
-
-    public Cliente(String nombre, String documento) {
+    public Cliente(int idCliente, String nombre, String documento, String email, String telefono,
+            Timestamp fechaRegistro) {
+        this.idCliente = idCliente;
         this.nombre = nombre;
         this.documento = documento;
-        //this.librosComprados = new ArrayList<   Libro   >();
-
-        this.listaDeAudiolibros = new ArrayList < Audiolibro > ();
-        this.listaDeDigital = new ArrayList < Digital > ();
-        this.listaDeFisico = new ArrayList < Fisico > ();
+        this.email = email;
+        this.telefono = telefono;
+        this.fechaRegistro = fechaRegistro;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setDocumento(String documento) {
-        this.documento = documento;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getDocumento() {
         return documento;
     }
 
-    /*public void addLibrosComprados (Libro libro){
-        this.librosComprados.add(libro);
-
-    }*/
-
-    public void addAudiolibro (Audiolibro audiolibro){
-        this.listaDeAudiolibros.add(audiolibro);
-
+    public void setDocumento(String documento) {
+        this.documento = documento;
     }
 
-    public void addDigital (Digital digital){
-        this.listaDeDigital.add(digital);
-
+    public String getEmail() {
+        return email;
     }
 
-    public void addFisico (Fisico fisico){
-        this.listaDeFisico.add(fisico);
-
+    public void setEmail(String email) {
+        this.email = email;
     }
-    
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public Timestamp getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(Timestamp fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+
     public void mostrarCliente() {
+        System.out.println("ID Cliente: " + idCliente);
         System.out.println("Nombre: " + nombre);
         System.out.println("Documento: " + documento);
-        
-        // validar si la lista de libros comprados no esta vacia
-        System.out.println("Audiolibros");
-        if (this.listaDeAudiolibros.isEmpty()) {
-            System.out.println("No hay libros comprados");
-        } else {
-            System.out.println("Lista de libros comprados:");
-            this.listaDeAudiolibros.forEach((audiolibro) -> {
-                audiolibro.mostrarLibro();
-                System.out.println("///////");
-            });
-        }
-
-        System.out.println("---------------------------------------");
-        System.out.println("Libros Digitales");
-        if (this.listaDeDigital.isEmpty()) {
-            System.out.println("No hay libros comprados");
-        } else {
-            System.out.println("Lista de libros comprados:");
-            this.listaDeDigital.forEach((digital) -> {
-                digital.mostrarLibro();
-                System.out.println("///////");
-            });
-        }
-
-        System.out.println("---------------------------------------");
-        System.out.println("Libros Fisicos");
-        if (this.listaDeFisico.isEmpty()) {
-            System.out.println("No hay libros comprados");
-        } else {
-            System.out.println("Lista de libros comprados:");
-            this.listaDeFisico.forEach((fisico) -> {
-                fisico.mostrarLibro();
-                System.out.println("///////");
-            });
-        }
-    
-
+        System.out.println("Email: " + email);
+        System.out.println("Teléfono: " + telefono);
+        System.out.println("Fecha de registro: " + fechaRegistro);
     }
 }
