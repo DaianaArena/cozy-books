@@ -52,7 +52,6 @@ node "PC/Servidor\nAplicación Java" as PC {
     }
     
     package "controller" {
-        [ShopController] as ShopCtrl
         [AutorController] as AutorCtrl
         [ClienteController] as ClienteCtrl
         [LibroController] as LibroCtrl
@@ -101,20 +100,15 @@ node "Sistema de Archivos\nLocal" as FileSystem {
 
 Usuario --> View : "interactúa"
 
-View --> ShopCtrl : "delega operaciones"
-View --> AutorCtrl
-View --> ClienteCtrl
-View --> LibroCtrl
-View --> VentaCtrl
+View --> AutorCtrl : "delega operaciones"
+View --> ClienteCtrl : "delega operaciones"
+View --> LibroCtrl : "delega operaciones"
+View --> VentaCtrl : "delega operaciones"
 
 ' ============================================
 ' RELACIONES CONTROLLER - CONTROLLER
 ' ============================================
-
-ShopCtrl --> AutorCtrl : "coordina"
-ShopCtrl --> ClienteCtrl : "coordina"
-ShopCtrl --> LibroCtrl : "coordina"
-ShopCtrl --> VentaCtrl : "coordina"
+' (No hay relaciones entre controladores)
 
 ' ============================================
 ' RELACIONES CONTROLLER - REPOSITORY
