@@ -52,15 +52,10 @@ public class ShopView {
             System.out.println("-----------------------------------------------------");
             System.out.println("Elija una de las siguientes opciones: ");
             System.out.println("");
-            System.out.println("1. Registrar Autor");
-            System.out.println("2. Registrar Cliente");
-            System.out.println("3. Registrar Libro");
-            System.out.println("4. Registrar Venta");
-            System.out.println("5. Mostrar Autores");
-            System.out.println("6. Mostrar Clientes");
-            System.out.println("7. Mostrar Libros");
-            System.out.println("8. Mostrar libros por autor");
-            System.out.println("9. Mostrar Ventas");
+            System.out.println("1. Autores");
+            System.out.println("2. Clientes");
+            System.out.println("3. Libros");
+            System.out.println("4. Ventas");
             System.out.println("0. Salir");
             System.out.println("");
             System.out.println("Ingrese su opción:");
@@ -74,31 +69,16 @@ public class ShopView {
     public void ejecutarOpcion(String opcion) {
         switch (opcion) {
             case "1":
-                autorController.registrarAutor();
+                menuAutores();
                 break;
             case "2":
-                clienteController.registrarCliente();
+                menuClientes();
                 break;
             case "3":
-                libroController.registrarLibro();
+                menuLibros();
                 break;
             case "4":
-                ventaController.registrarVenta();
-                break;
-            case "5":
-                autorController.mostrarAutores();
-                break;
-            case "6":
-                clienteController.mostrarClientes();
-                break;
-            case "7":
-                libroController.mostrarLibros();
-                break;
-            case "8":
-                libroController.mostrarLibrosPorAutor();
-                break;
-            case "9":
-                ventaController.mostrarVentas();
+                menuVentas();
                 break;
             case "0":
                 System.out.println("Hasta luego!");
@@ -109,5 +89,133 @@ public class ShopView {
                 System.out.println("-----------------------");
                 break;
         }
+    }
+
+    public void menuAutores() {
+        String op;
+
+        do {
+            System.out.println("-----------------------------------------------------");
+            System.out.println("MENU AUTORES");
+            System.out.println("-----------------------------------------------------");
+            System.out.println("1. Registrar Autor");
+            System.out.println("2. Mostrar Autores");
+            System.out.println("0. Volver al menú principal");
+            System.out.println("");
+            System.out.println("Ingrese su opción:");
+            op = lector.nextLine();
+
+            switch (op) {
+                case "1":
+                    autorController.registrarAutor();
+                    break;
+                case "2":
+                    autorController.mostrarAutores();
+                    break;
+                case "0":
+                    System.out.println("Volviendo al menú principal...");
+                    break;
+                default:
+                    System.out.println("Opción inválida");
+                    break;
+            }
+        } while (!op.equals("0"));
+    }
+
+    public void menuClientes() {
+        String op;
+
+        do {
+            System.out.println("-----------------------------------------------------");
+            System.out.println("MENU CLIENTES");
+            System.out.println("-----------------------------------------------------");
+            System.out.println("1. Registrar Cliente");
+            System.out.println("2. Mostrar Clientes");
+            System.out.println("0. Volver al menú principal");
+            System.out.println("");
+            System.out.println("Ingrese su opción:");
+            op = lector.nextLine();
+
+            switch (op) {
+                case "1":
+                    clienteController.registrarCliente();
+                    break;
+                case "2":
+                    clienteController.mostrarClientes();
+                    break;
+                case "0":
+                    System.out.println("Volviendo al menú principal...");
+                    break;
+                default:
+                    System.out.println("Opción inválida");
+                    break;
+            }
+        } while (!op.equals("0"));
+    }
+
+    public void menuLibros() {
+        String op;
+
+        do {
+            System.out.println("-----------------------------------------------------");
+            System.out.println("MENU LIBROS");
+            System.out.println("-----------------------------------------------------");
+            System.out.println("1. Registrar Libro");
+            System.out.println("2. Mostrar Libros");
+            System.out.println("3. Mostrar libros por autor");
+            System.out.println("0. Volver al menú principal");
+            System.out.println("");
+            System.out.println("Ingrese su opción:");
+            op = lector.nextLine();
+
+            switch (op) {
+                case "1":
+                    libroController.registrarLibro();
+                    break;
+                case "2":
+                    libroController.mostrarLibros();
+                    break;
+                case "3":
+                    libroController.mostrarLibrosPorAutor();
+                    break;
+                case "0":
+                    System.out.println("Volviendo al menú principal...");
+                    break;
+                default:
+                    System.out.println("Opción inválida");
+                    break;
+            }
+        } while (!op.equals("0"));
+    }
+
+    public void menuVentas() {
+        String op;
+
+        do {
+            System.out.println("-----------------------------------------------------");
+            System.out.println("MENU VENTAS");
+            System.out.println("-----------------------------------------------------");
+            System.out.println("1. Registrar Venta");
+            System.out.println("2. Mostrar Ventas");
+            System.out.println("0. Volver al menú principal");
+            System.out.println("");
+            System.out.println("Ingrese su opción:");
+            op = lector.nextLine();
+
+            switch (op) {
+                case "1":
+                    ventaController.registrarVenta();
+                    break;
+                case "2":
+                    ventaController.mostrarVentas();
+                    break;
+                case "0":
+                    System.out.println("Volviendo al menú principal...");
+                    break;
+                default:
+                    System.out.println("Opción inválida");
+                    break;
+            }
+        } while (!op.equals("0"));
     }
 }

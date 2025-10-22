@@ -43,11 +43,11 @@ node "PC/Servidor\nAplicación Java" as PC {
     
     package "view" {
         component "Interfaz Consola\n(Sistema de Gestión de Ventas)" as View {
-            [Menu Principal]
-            [Menu Autores]
-            [Menu Clientes]
-            [Menu Libros]
-            [Menu Ventas]
+            [Menu Principal\n(Autores, Clientes, Libros, Ventas)] as MenuPrincipal
+            [Submenu Autores\n(Registrar, Mostrar)] as SubmenuAutores
+            [Submenu Clientes\n(Registrar, Mostrar)] as SubmenuClientes
+            [Submenu Libros\n(Registrar, Mostrar, Por Autor)] as SubmenuLibros
+            [Submenu Ventas\n(Registrar, Mostrar)] as SubmenuVentas
         }
     }
     
@@ -100,10 +100,23 @@ node "Sistema de Archivos\nLocal" as FileSystem {
 
 Usuario --> View : "interactúa"
 
-View --> AutorCtrl : "delega operaciones"
-View --> ClienteCtrl : "delega operaciones"
-View --> LibroCtrl : "delega operaciones"
-View --> VentaCtrl : "delega operaciones"
+' ============================================
+' RELACIONES INTERNAS DE LA VIEW
+' ============================================
+
+MenuPrincipal --> SubmenuAutores : "opción 1"
+MenuPrincipal --> SubmenuClientes : "opción 2"
+MenuPrincipal --> SubmenuLibros : "opción 3"
+MenuPrincipal --> SubmenuVentas : "opción 4"
+
+' ============================================
+' RELACIONES SUBMENU - CONTROLLER
+' ============================================
+
+SubmenuAutores --> AutorCtrl : "delega operaciones"
+SubmenuClientes --> ClienteCtrl : "delega operaciones"
+SubmenuLibros --> LibroCtrl : "delega operaciones"
+SubmenuVentas --> VentaCtrl : "delega operaciones"
 
 ' ============================================
 ' RELACIONES CONTROLLER - CONTROLLER
