@@ -100,6 +100,9 @@ public class ShopView {
             System.out.println("-----------------------------------------------------");
             System.out.println("1. Registrar Autor");
             System.out.println("2. Mostrar Autores");
+            System.out.println("3. Buscar Autor");
+            System.out.println("4. Actualizar Autor");
+            System.out.println("5. Eliminar Autor");
             System.out.println("0. Volver al menú principal");
             System.out.println("");
             System.out.println("Ingrese su opción:");
@@ -111,6 +114,15 @@ public class ShopView {
                     break;
                 case "2":
                     autorController.mostrarAutores();
+                    break;
+                case "3":
+                    autorController.buscarAutor();
+                    break;
+                case "4":
+                    autorController.actualizarAutor();
+                    break;
+                case "5":
+                    autorController.eliminarAutor();
                     break;
                 case "0":
                     System.out.println("Volviendo al menú principal...");
@@ -131,6 +143,9 @@ public class ShopView {
             System.out.println("-----------------------------------------------------");
             System.out.println("1. Registrar Cliente");
             System.out.println("2. Mostrar Clientes");
+            System.out.println("3. Buscar Cliente");
+            System.out.println("4. Actualizar Cliente");
+            System.out.println("5. Eliminar Cliente");
             System.out.println("0. Volver al menú principal");
             System.out.println("");
             System.out.println("Ingrese su opción:");
@@ -142,6 +157,15 @@ public class ShopView {
                     break;
                 case "2":
                     clienteController.mostrarClientes();
+                    break;
+                case "3":
+                    clienteController.buscarCliente();
+                    break;
+                case "4":
+                    clienteController.actualizarCliente();
+                    break;
+                case "5":
+                    clienteController.eliminarCliente();
                     break;
                 case "0":
                     System.out.println("Volviendo al menú principal...");
@@ -162,7 +186,10 @@ public class ShopView {
             System.out.println("-----------------------------------------------------");
             System.out.println("1. Registrar Libro");
             System.out.println("2. Mostrar Libros");
-            System.out.println("3. Mostrar libros por autor");
+            System.out.println("3. Buscar Libro");
+            System.out.println("4. Actualizar Libro");
+            System.out.println("5. Eliminar Libro");
+            System.out.println("6. Mostrar libros por autor");
             System.out.println("0. Volver al menú principal");
             System.out.println("");
             System.out.println("Ingrese su opción:");
@@ -176,6 +203,15 @@ public class ShopView {
                     libroController.mostrarLibros();
                     break;
                 case "3":
+                    libroController.buscarLibro();
+                    break;
+                case "4":
+                    libroController.actualizarLibro();
+                    break;
+                case "5":
+                    libroController.eliminarLibro();
+                    break;
+                case "6":
                     libroController.mostrarLibrosPorAutor();
                     break;
                 case "0":
@@ -197,6 +233,9 @@ public class ShopView {
             System.out.println("-----------------------------------------------------");
             System.out.println("1. Registrar Venta");
             System.out.println("2. Mostrar Ventas");
+            System.out.println("3. Buscar Venta");
+            System.out.println("4. Actualizar Venta");
+            System.out.println("5. Eliminar Venta");
             System.out.println("0. Volver al menú principal");
             System.out.println("");
             System.out.println("Ingrese su opción:");
@@ -208,6 +247,15 @@ public class ShopView {
                     break;
                 case "2":
                     ventaController.mostrarVentas();
+                    break;
+                case "3":
+                    ventaController.buscarVenta();
+                    break;
+                case "4":
+                    ventaController.actualizarVenta();
+                    break;
+                case "5":
+                    ventaController.eliminarVenta();
                     break;
                 case "0":
                     System.out.println("Volviendo al menú principal...");

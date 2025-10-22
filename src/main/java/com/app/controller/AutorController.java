@@ -63,6 +63,128 @@ public class AutorController {
         autorRepository.mostrarTodos();
     }
 
+    public void actualizarAutor() {
+        System.out.println("-----------------------------------------------------");
+        System.out.println("ACTUALIZAR AUTOR");
+        System.out.println("-----------------------------------------------------");
+
+        if (autorRepository.estaVacio()) {
+            System.out.println("No hay autores registrados para actualizar");
+            return;
+        }
+
+        autorRepository.mostrarTodos();
+        System.out.println("Ingrese el ID del autor a actualizar:");
+        int id = lector.nextInt();
+        lector.nextLine(); // Limpiar buffer
+
+        Autor autor = autorRepository.obtenerPorId(id);
+        if (autor == null) {
+            System.out.println("Autor no encontrado");
+            return;
+        }
+
+        System.out.println("Autor encontrado:");
+        autor.mostrarAutor();
+        System.out.println("\nIngrese los nuevos datos (presione Enter para mantener el valor actual):");
+
+        System.out.println("Nombre actual: " + autor.getNombre());
+        System.out.println("Nuevo nombre: ");
+        String nuevoNombre = lector.nextLine().trim();
+        if (!nuevoNombre.isEmpty() && nuevoNombre.length() <= 100) {
+            autor.setNombre(nuevoNombre);
+        } else if (!nuevoNombre.isEmpty()) {
+            System.out.println("Error: El nombre no puede exceder 100 caracteres");
+            return;
+        }
+
+        System.out.println("Nacionalidad actual: " + autor.getNacionalidad());
+        System.out.println("Nueva nacionalidad: ");
+        String nuevaNacionalidad = lector.nextLine().trim();
+        if (!nuevaNacionalidad.isEmpty() && nuevaNacionalidad.length() <= 50) {
+            autor.setNacionalidad(nuevaNacionalidad);
+        } else if (!nuevaNacionalidad.isEmpty()) {
+            System.out.println("Error: La nacionalidad no puede exceder 50 caracteres");
+            return;
+        }
+
+        System.out.println("Biografía actual: " + autor.getBiografia());
+        System.out.println("Nueva biografía: ");
+        String nuevaBiografia = lector.nextLine().trim();
+        if (!nuevaBiografia.isEmpty()) {
+            autor.setBiografia(nuevaBiografia);
+        }
+
+        autorRepository.actualizar(autor);
+        System.out.println("Autor actualizado correctamente");
+    }
+
+    public void eliminarAutor() {
+        System.out.println("-----------------------------------------------------");
+        System.out.println("ELIMINAR AUTOR");
+        System.out.println("-----------------------------------------------------");
+
+        if (autorRepository.estaVacio()) {
+            System.out.println("No hay autores registrados para eliminar");
+            return;
+        }
+
+        autorRepository.mostrarTodos();
+        System.out.println("Ingrese el ID del autor a eliminar:");
+        int id = lector.nextInt();
+        lector.nextLine(); // Limpiar buffer
+
+        Autor autor = autorRepository.obtenerPorId(id);
+        if (autor == null) {
+            System.out.println("Autor no encontrado");
+            return;
+        }
+
+        // Verificar si tiene libros asociados
+        if (tieneLibrosAsociados(id)) {
+            System.out.println("No se puede eliminar el autor porque tiene libros asociados");
+            return;
+        }
+
+        System.out.println("¿Está seguro de que desea eliminar este autor? (s/n)");
+        String confirmacion = lector.nextLine().toLowerCase();
+
+        if (confirmacion.equals("s") || confirmacion.equals("si")) {
+            autorRepository.eliminar(id);
+            System.out.println("Autor eliminado correctamente");
+        } else {
+            System.out.println("Operación cancelada");
+        }
+    }
+
+    public void buscarAutor() {
+        System.out.println("-----------------------------------------------------");
+        System.out.println("BUSCAR AUTOR");
+        System.out.println("-----------------------------------------------------");
+
+        System.out.println("Ingrese el nombre del autor a buscar:");
+        String criterio = lector.nextLine().trim();
+
+        if (criterio.isEmpty()) {
+            System.out.println("Debe ingresar un criterio de búsqueda");
+            return;
+        }
+
+        Autor autor = autorRepository.buscar(criterio);
+        if (autor != null) {
+            System.out.println("Autor encontrado:");
+            autor.mostrarAutor();
+        } else {
+            System.out.println("No se encontró ningún autor con ese criterio");
+        }
+    }
+
+    private boolean tieneLibrosAsociados(int idAutor) {
+        // Esta validación se implementará cuando tengamos acceso al LibroRepository
+        // Por ahora retornamos false para permitir la eliminación
+        return false;
+    }
+
     public Autor obtenerAutor(int id) {
         return autorRepository.obtenerPorId(id);
     }

@@ -10,6 +10,7 @@ import main.java.com.app.repository.LibroRepository;
 import main.java.com.app.util.ArchivoService;
 import java.sql.Timestamp;
 import java.util.Scanner;
+import java.util.List;
 
 public class VentaController {
 
@@ -152,6 +153,138 @@ public class VentaController {
 
     public void mostrarVentas() {
         ventaRepository.mostrarTodos();
+    }
+
+    public void actualizarVenta() {
+        System.out.println("-----------------------------------------------------");
+        System.out.println("ACTUALIZAR VENTA");
+        System.out.println("-----------------------------------------------------");
+
+        if (ventaRepository.estaVacio()) {
+            System.out.println("No hay ventas registradas para actualizar");
+            return;
+        }
+
+        ventaRepository.mostrarTodos();
+        System.out.println("Ingrese el ID de la venta a actualizar:");
+        int id = lector.nextInt();
+        lector.nextLine(); // Limpiar buffer
+
+        Venta venta = ventaRepository.obtenerPorId(id);
+        if (venta == null) {
+            System.out.println("Venta no encontrada");
+            return;
+        }
+
+        System.out.println("Venta encontrada:");
+        venta.mostrarVenta();
+        System.out.println("\n¿Qué desea actualizar?");
+        System.out.println("1. Estado de la venta");
+        System.out.println("2. Método de pago");
+        System.out.println("0. Cancelar");
+
+        String opcion = lector.nextLine();
+
+        switch (opcion) {
+            case "1":
+                actualizarEstadoVenta(venta);
+                break;
+            case "2":
+                actualizarMetodoPago(venta);
+                break;
+            case "0":
+                System.out.println("Operación cancelada");
+                break;
+            default:
+                System.out.println("Opción inválida");
+                break;
+        }
+    }
+
+    private void actualizarEstadoVenta(Venta venta) {
+        System.out.println("Estado actual: " + venta.getEstado());
+        System.out.println("Nuevo estado (COMPLETADA, PENDIENTE, CANCELADA):");
+        String nuevoEstado = lector.nextLine().trim().toUpperCase();
+
+        if (nuevoEstado.equals("COMPLETADA") || nuevoEstado.equals("PENDIENTE") || nuevoEstado.equals("CANCELADA")) {
+            venta.setEstado(nuevoEstado);
+            ventaRepository.actualizar(venta);
+            System.out.println("Estado de venta actualizado correctamente");
+        } else {
+            System.out.println("Error: Estado inválido");
+        }
+    }
+
+    private void actualizarMetodoPago(Venta venta) {
+        System.out.println("Método de pago actual: " + venta.getMetodoPago());
+        System.out.println("Nuevo método de pago (EFECTIVO, TARJETA, TRANSFERENCIA):");
+        String nuevoMetodo = lector.nextLine().trim().toUpperCase();
+
+        if (nuevoMetodo.equals("EFECTIVO") || nuevoMetodo.equals("TARJETA") || nuevoMetodo.equals("TRANSFERENCIA")) {
+            venta.setMetodoPago(nuevoMetodo);
+            ventaRepository.actualizar(venta);
+            System.out.println("Método de pago actualizado correctamente");
+        } else {
+            System.out.println("Error: Método de pago inválido");
+        }
+    }
+
+    public void eliminarVenta() {
+        System.out.println("-----------------------------------------------------");
+        System.out.println("ELIMINAR VENTA");
+        System.out.println("-----------------------------------------------------");
+
+        if (ventaRepository.estaVacio()) {
+            System.out.println("No hay ventas registradas para eliminar");
+            return;
+        }
+
+        ventaRepository.mostrarTodos();
+        System.out.println("Ingrese el ID de la venta a eliminar:");
+        int id = lector.nextInt();
+        lector.nextLine(); // Limpiar buffer
+
+        Venta venta = ventaRepository.obtenerPorId(id);
+        if (venta == null) {
+            System.out.println("Venta no encontrada");
+            return;
+        }
+
+        System.out.println("¿Está seguro de que desea eliminar esta venta? (s/n)");
+        System.out.println("NOTA: Esto eliminará también todos los detalles de la venta");
+        String confirmacion = lector.nextLine().toLowerCase();
+
+        if (confirmacion.equals("s") || confirmacion.equals("si")) {
+            ventaRepository.eliminar(id);
+            System.out.println("Venta eliminada correctamente");
+        } else {
+            System.out.println("Operación cancelada");
+        }
+    }
+
+    public void buscarVenta() {
+        System.out.println("-----------------------------------------------------");
+        System.out.println("BUSCAR VENTA");
+        System.out.println("-----------------------------------------------------");
+
+        System.out.println("Ingrese el nombre del cliente, método de pago o estado:");
+        String criterio = lector.nextLine().trim();
+
+        if (criterio.isEmpty()) {
+            System.out.println("Debe ingresar un criterio de búsqueda");
+            return;
+        }
+
+        List<Venta> ventas = ventaRepository.buscar(criterio);
+        if (!ventas.isEmpty()) {
+            System.out.println("Ventas encontradas:");
+            for (Venta venta : ventas) {
+                venta.mostrarVenta();
+                System.out.println("================================================");
+            }
+        } else {
+            System.out.println("No se encontraron ventas con ese criterio");
+        }
     }
 
     public double calcularTotal(java.util.List<DetalleVenta> detalles) {

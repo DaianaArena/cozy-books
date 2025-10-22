@@ -6,6 +6,7 @@ import main.java.com.app.repository.LibroRepository;
 import main.java.com.app.repository.AutorRepository;
 import java.sql.Timestamp;
 import java.util.Scanner;
+import java.util.List;
 
 public class LibroController {
 
@@ -170,6 +171,142 @@ public class LibroController {
 
         libroRepository.mostrarPorAutor(idAutor);
         lector.nextLine();
+    }
+
+    public void actualizarLibro() {
+        System.out.println("-----------------------------------------------------");
+        System.out.println("ACTUALIZAR LIBRO");
+        System.out.println("-----------------------------------------------------");
+
+        if (libroRepository.estaVacio()) {
+            System.out.println("No hay libros registrados para actualizar");
+            return;
+        }
+
+        libroRepository.mostrarTodos();
+        System.out.println("Ingrese el ID del libro a actualizar:");
+        int id = lector.nextInt();
+        lector.nextLine(); // Limpiar buffer
+
+        Libro libro = libroRepository.obtenerPorId(id);
+        if (libro == null) {
+            System.out.println("Libro no encontrado");
+            return;
+        }
+
+        System.out.println("Libro encontrado:");
+        libro.mostrarLibro();
+        System.out.println("\nIngrese los nuevos datos (presione Enter para mantener el valor actual):");
+
+        // Actualizar datos básicos
+        System.out.println("Título actual: " + libro.getTitulo());
+        System.out.println("Nuevo título: ");
+        String nuevoTitulo = lector.nextLine().trim();
+        if (!nuevoTitulo.isEmpty() && nuevoTitulo.length() <= 200) {
+            libro.setTitulo(nuevoTitulo);
+        } else if (!nuevoTitulo.isEmpty()) {
+            System.out.println("Error: El título no puede exceder 200 caracteres");
+            return;
+        }
+
+        System.out.println("Precio actual: " + libro.getPrecio());
+        System.out.println("Nuevo precio: ");
+        String precioStr = lector.nextLine().trim();
+        if (!precioStr.isEmpty()) {
+            try {
+                double nuevoPrecio = Double.parseDouble(precioStr);
+                if (nuevoPrecio > 0) {
+                    libro.setPrecio(nuevoPrecio);
+                } else {
+                    System.out.println("Error: El precio debe ser mayor a 0");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Formato de precio inválido");
+                return;
+            }
+        }
+
+        // Actualizar stock si es libro físico
+        if ("FISICO".equals(libro.getTipoLibro())) {
+            System.out.println("Stock actual: " + libro.getStock());
+            System.out.println("Nuevo stock: ");
+            String stockStr = lector.nextLine().trim();
+            if (!stockStr.isEmpty()) {
+                try {
+                    int nuevoStock = Integer.parseInt(stockStr);
+                    if (nuevoStock >= 0) {
+                        libro.setStock(nuevoStock);
+                    } else {
+                        System.out.println("Error: El stock no puede ser negativo");
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Formato de stock inválido");
+                    return;
+                }
+            }
+        }
+
+        libroRepository.actualizar(libro);
+        System.out.println("Libro actualizado correctamente");
+    }
+
+    public void eliminarLibro() {
+        System.out.println("-----------------------------------------------------");
+        System.out.println("ELIMINAR LIBRO");
+        System.out.println("-----------------------------------------------------");
+
+        if (libroRepository.estaVacio()) {
+            System.out.println("No hay libros registrados para eliminar");
+            return;
+        }
+
+        libroRepository.mostrarTodos();
+        System.out.println("Ingrese el ID del libro a eliminar:");
+        int id = lector.nextInt();
+        lector.nextLine(); // Limpiar buffer
+
+        Libro libro = libroRepository.obtenerPorId(id);
+        if (libro == null) {
+            System.out.println("Libro no encontrado");
+            return;
+        }
+
+        System.out.println("¿Está seguro de que desea eliminar este libro? (s/n)");
+        String confirmacion = lector.nextLine().toLowerCase();
+
+        if (confirmacion.equals("s") || confirmacion.equals("si")) {
+            libroRepository.eliminar(id);
+            System.out.println("Libro eliminado correctamente");
+        } else {
+            System.out.println("Operación cancelada");
+        }
+    }
+
+    public void buscarLibro() {
+        System.out.println("-----------------------------------------------------");
+        System.out.println("BUSCAR LIBRO");
+        System.out.println("-----------------------------------------------------");
+
+        System.out.println("Ingrese el título, editorial o género del libro a buscar:");
+        String criterio = lector.nextLine().trim();
+
+        if (criterio.isEmpty()) {
+            System.out.println("Debe ingresar un criterio de búsqueda");
+            return;
+        }
+
+        List<Libro> libros = libroRepository.buscar(criterio);
+        if (!libros.isEmpty()) {
+            System.out.println("Libros encontrados:");
+            for (Libro libro : libros) {
+                libro.mostrarLibro();
+                System.out.println("-----------------------------------------------------");
+            }
+        } else {
+            System.out.println("No se encontraron libros con ese criterio");
+        }
     }
 
     public Libro obtenerLibro(int id) {
